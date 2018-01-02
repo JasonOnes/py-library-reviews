@@ -22,6 +22,7 @@ def find_subject_library():
 
     today_lesson = random.choice(fresh_index)
     print(today_lesson)
+
    
 find_subject_library()
 
