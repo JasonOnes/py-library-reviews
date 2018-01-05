@@ -26,7 +26,9 @@ def create_lib_list():
     items_to_go = []
     for item in index_body:
         # didn't bother with regex since just doing this once to populate db
-        nums.append(item.get_text()[:5])
+        section = item.get_text()[:5]
+        nums.append(section)
+    # if there is a letter in the first five chars it is a section header not a library section.subsection 
     for num in nums:
         for c in num:
             if c.isalpha():
@@ -34,7 +36,7 @@ def create_lib_list():
 
     fresh_index = [item for item in nums if item not in items_to_go]
 
-    for item in fresh_index:
+    for item in fresh_index:   
         cursor.execute("""INSERT INTO lib(section, done) VALUES(?, ?)""", (item, 0))
 
     print("db populated, ")
@@ -53,10 +55,11 @@ def find_subject_library():
     lib_num_tuple = today_lesson.fetchone() # now tuple
     lib_num = ''.join(lib_num_tuple) # now string
     if lib_num[-1] == '.':
-        print(lib_num[:-1])
+        print(lib_num[:-1])  
     else:
         print(lib_num)
 
+    # marks that section as done (1 = true), will no longer be elgible for selection
     cursor.execute('''UPDATE lib SET done = ? WHERE section = ? ''', (1, lib_num))
     db.commit()
 
@@ -65,7 +68,7 @@ def find_subject_library():
     print("db updated, lesson marked as done")
     print("Only {} more built-ins to review!".format(count))
     
-
-#create_lib_list()
+# uncomment below if I need to recreate the whole list of library sections
+# create_lib_list()
 find_subject_library()
 
