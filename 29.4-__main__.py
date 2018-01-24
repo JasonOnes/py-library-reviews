@@ -15,8 +15,17 @@ from somefile import function
 
 x.function(y)
 
-By placing the following check you can run certain conditional code only when program is called directly.
+This can be easily demonstrated by adding a simple:
+print(__name__)  
+inside script and running as main or in another script via import 
+when running python somefile.py >>> __main__
+when imported >> somefile
+
+
 """
+# By placing the following conditional you can run certain conditional code only when program is called directly.
+
+
 
 if __name__ == "__main__":
     # execute some code
